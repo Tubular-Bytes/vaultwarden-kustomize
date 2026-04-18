@@ -1,0 +1,20 @@
+resources:
+- ./base/statefulset.yaml
+- ./base/service.yaml
+- ./base/ingress.yaml
+
+secretGenerator:
+- name: vault-secrets
+  envs:
+  - ./properties/.env
+
+patches:
+- path: patches/ingress-patch.json
+  target:
+    kind: Ingress
+    name: vw-web
+
+images:
+- name: vaultwarden/server
+  newName: vaultwarden/server
+  newTag: latest

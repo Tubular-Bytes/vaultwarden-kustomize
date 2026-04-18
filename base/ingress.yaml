@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vw-web
+  annotations:
+    cert-manager.io/cluster-issuer: cluster-letsencrypt-prod
+  labels:
+    app.kubernetes.io/name: vw-web
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ""
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: web-ext
+            port: 
+              number: 80
+  tls:
+  - hosts:
+    - ""
+    secretName: vw-web-tls
